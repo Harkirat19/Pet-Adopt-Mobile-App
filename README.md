@@ -4,7 +4,7 @@
 | Name        |   Role |     Github    | Email       |
 | ----------- | --------- | --------- | --------------------------- |
 | Pranjal Vijaykumar Parmar  | Front-end Dev | pparmar25 | pparmar25@myseneca.ca |
-| Kumudhini Reddicherla  | Back-end Dev |  | kreddicherla@myseneca.ca |
+| Kumudhini Reddicherla  | Back-end Dev | kumudhini1234 | kreddicherla@myseneca.ca |
 | Srushti Jitendrakumar Patel  | Back-end Dev | srushti674 | spatel674@myseneca.ca |
 | Harkirat Singh  | Database Specialist | harkirat19 | harkirat-singh6@myseneca.ca |
 
