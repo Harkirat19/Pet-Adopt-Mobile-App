@@ -11,14 +11,15 @@
 
 
 ## Project Description
-Our project focuses on developing a Pet Adoption Mobile App to connect potential adopters with animals and streamline the adoption process. The app features detailed pet profiles, advanced search filters, and direct adoption applications. Users can save favorite pets, explore matches, and post pets for adoption if they wish to give them away.
+Our project focuses on developing a Pet Adoption Mobile App to connect potential adopters with animals and streamline the adoption process. The app features detailed  User registration and Profile creation, Pet profiles, Advanced search filters and Option to Chat with pet owners. Users can save favorite pets, explore matches, and post pets for adoption if they wish to give them away.
 
-### Pet Profiles
-Detailed profiles for each pet, including images, age, breed, and health status, are displayed to help potential adopters learn about the animals available for adoption. This feature allows adopters to find pets that best match their preferences and lifestyle.
 
 ### User Registration and Profile Creation
 Implement a user-friendly registration process allowing adopters to create personal profiles.
 Enable users to save their preferences and receive personalized pet recommendations.
+
+### Pet Profiles
+Detailed profiles for each pet, including images, age, breed, and health status, are displayed to help potential adopters learn about the animals available for adoption. This feature allows adopters to find pets that best match their preferences and lifestyle.
 
 ### Advanced Pet Search and Filtering
 Introduce advanced search filters (e.g., species, breed, age, size, location) to help users find pets that match their criteria.
@@ -35,10 +36,6 @@ Provide a secure and user-friendly chat interface for communication between adop
 ### Favorites and Wishlist
 Enable users to save favorite pets to a wishlist for future reference.
 Notify users if a favorited pet's status changes (e.g., adopted, pending).
-
-### Integration with Social Media
-Allow users to share pet profiles on social media platforms to increase visibility.
-Facilitate login and registration through social media accounts for convenience.
 
 
 ## Tech Stack
