@@ -11,34 +11,54 @@
 
 
 ## Project Description
-Our project focuses on developing a Pet Adoption and Care Mobile App designed to connect potential adopters with animal shelters and streamline the adoption process. The platform allows shelters to showcase available pets, where adopters can explore pet profiles and contact the shelter if they are interested to adopt. Additionally, post-adoption care tips and resources will support adopters in providing a smooth transition for their new pets.
+Our project focuses on developing a Pet Adoption Mobile App to connect potential adopters with animals and streamline the adoption process. The app features detailed pet profiles, advanced search filters, and direct adoption applications. Users can save favorite pets, explore matches, and post pets for adoption if they wish to give them away.
 
 ### Pet Profiles
 Detailed profiles for each pet, including images, age, breed, and health status, are displayed to help potential adopters learn about the animals available for adoption. This feature allows adopters to find pets that best match their preferences and lifestyle.
 
-### Interactive City Shelter Map
-A map showcasing all animal shelters in the city provides users with the ability to locate shelters easily. By clicking on a shelter's location, users can view a list of animals currently available for adoption, along with their detailed profiles.
+### User Registration and Profile Creation
+Implement a user-friendly registration process allowing adopters to create personal profiles.
+Enable users to save their preferences and receive personalized pet recommendations.
 
-### Post-Adoption Care Guides
-Adopters will have access to care guides filled with helpful information about pet care, health tips, training resources, and best practices to ensure a smooth transition for the pet into its new home.
+### Advanced Pet Search and Filtering
+Introduce advanced search filters (e.g., species, breed, age, size, location) to help users find pets that match their criteria.
+Incorporate a matching algorithm to suggest pets based on user preferences.
+
+### Post a New Pet for Adoption
+Allow users to list pets they wish to put up for adoption by creating detailed profiles with images, descriptions, and health information.
+Enable the option to update or remove listings as needed.
+
+### Chat with Pet Owners
+Allow users to initiate chat conversations with the pet owner directly through the app.
+Provide a secure and user-friendly chat interface for communication between adopters and pet owners.
+
+### Favorites and Wishlist
+Enable users to save favorite pets to a wishlist for future reference.
+Notify users if a favorited pet's status changes (e.g., adopted, pending).
+
+### Integration with Social Media
+Allow users to share pet profiles on social media platforms to increase visibility.
+Facilitate login and registration through social media accounts for convenience.
+
 
 ## Tech Stack
 
 ### Frontend
 
-The frontend will be developed using React.js, leveraging its component-based architecture for building dynamic user interfaces. For styling and responsive design, Tailwind CSS will be employed to ensure a clean and modern user experience. The website will feature a Google Maps API integration to display city shelters and provide clickable markers that reveal available animals at each shelter.
+React Native: For building cross-platform mobile applications with a responsive and user-friendly interface.
+Expo: To simplify mobile app development and deployment processes.
 
 ### Backend
 
-The website's backend will be powered by Node.js using the Express.js framework to efficiently handle HTTP requests and server-side logic. Real-time data storage and management will be supported through Firebase Firestore. The backend will be designed to provide scalable and fast data operations, including API endpoints for shelter and pet data management.
+Firebase Firestore: A cloud-hosted NoSQL database for real-time data storage and management.
+Firebase Authentication: To securely manage user accounts and authentication.
 
-### Developing Tools
+### Tools and Development Environment
 
-This website will be built using Visual Studio Code (VS Code) with several extensions to enhance development like, Live Server, Prettier, etc.
+Visual Studio Code (VS Code): With extensions like Prettier for code formatting and debugging tools.
+Version Control: Managed collaboratively using Git and GitHub.
 
+### Hosting
 
-Version Control: The development process will be managed using GitHub for collaborative coding and version control.
-
-
-Hosting: The final hosting platform will be determined later, with potential candidates including Vercel or Firebase Hosting.
+The final hosting platform will be determined later, with potential candidates including Vercel or Firebase Hosting.
 
