@@ -11,31 +11,44 @@
 
 
 ## Project Description
-Our project focuses on developing a Pet Adoption Mobile App to connect potential adopters with animals and streamline the adoption process. The app features detailed  User registration and Profile creation, Pet profiles, Advanced search filters and Option to Chat with pet owners. Users can save favorite pets, explore matches, and post pets for adoption if they wish to give them away.
+Our project focuses on developing a Pet Adoption Mobile App to connect potential adopters with animals and streamline the adoption process. The app features detailed  User registration and Profile creation, Pet profiles, Advanced search filters and Option to Chat with pet owners. Users can add pets to wishlist, explore matches, and post pets for adoption if they wish to give them away.
 
 
 ### User Registration and Profile Creation
-Implement a user-friendly registration process allowing adopters to create personal profiles.
-Enable users to save their preferences and receive personalized pet recommendations.
+  - User-friendly registration process to create personal profiles featuring profile picture, name, e-mail, contact number.
+  - Option to update or delete user profiles.
+
+### Pet Adoption Listings
+- Pet Adoption Listings include pet details such as pet profile, location and owner contact information.
+- Each pet profile represents an individual animal available for adoption.
+- Adoption listings group pet profiles created by the pet owners.
+- Ensures a seamless user experience for browsing and managing pets.
 
 ### Pet Profiles
-Detailed profiles for each pet, including images, age, breed, and health status, are displayed to help potential adopters learn about the animals available for adoption. This feature allows adopters to find pets that best match their preferences and lifestyle.
+- Detailed profiles for each pet, including:
+  - Name, age, breed, gender, and health status (e.g., vaccinated, neutered/spayed).
+  - Photos to showcase the pet's appearance.
+  - Status indicators (e.g., Available or Adopted).
+  - Linked to adoption listings with owner details.
 
 ### Advanced Pet Search and Filtering
-Introduce advanced search filters (e.g., species, breed, age, size, location) to help users find pets that match their criteria.
-Incorporate a matching algorithm to suggest pets based on user preferences.
+- Filters for species, breed, age, size, location, and health status.
+- Matching algorithm to suggest pets based on pet filters applied by user.
+- Results sorted by relevance, proximity, or recency of listing.
 
 ### Post a New Pet for Adoption
-Allow users to list pets they wish to put up for adoption by creating detailed profiles with images, descriptions, and health information.
-Enable the option to update or remove listings as needed.
+- Easy form for creating adoption listings with fields for pet details, photos, and owner contact information.
+- Features to update or delete listings.
 
 ### Chat with Pet Owners
-Allow users to initiate chat conversations with the pet owner directly through the app.
-Provide a secure and user-friendly chat interface for communication between adopters and pet owners.
+- Real-time messaging to ensure quick and effective communication between adopters and pet owners.
+- Feature for users to share multimedia (e.g., photos or videos of pets) within the chat for better interaction.
+- Include message history storage, allowing users to access previous conversations.
+- Offer a quick-access feature to initiate chats directly from pet profiles or adoption listings.
 
-### Favorites and Wishlist
-Enable users to save favorite pets to a wishlist for future reference.
-Notify users if a favorited pet's status changes (e.g., adopted, pending).
+### User Wishlist
+- Enable users to save pets to their wishlist for future reference.
+- Allow users to sort saved pets by status, like "Available" or "Adopted".
 
 
 ## Tech Stack
