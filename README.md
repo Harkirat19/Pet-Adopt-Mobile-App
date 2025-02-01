@@ -61,7 +61,7 @@ Expo: To simplify mobile app development and deployment processes.
 ### Backend
 
 Firebase Firestore: A cloud-hosted NoSQL database for real-time data storage and management.
-Firebase Authentication: To securely manage user accounts and authentication.
+Clerk Authentication: To securely manage user accounts and authentication.
 
 ### Tools and Development Environment
 
