@@ -1,3 +1,12 @@
+## Developers
+| Name        |   Role |     Github    | Email       |
+| ----------- | --------- | --------- | --------------------------- |
+| Pranjal Vijaykumar Parmar  | Back-end Dev | pparmar25 | pparmar25@myseneca.ca |
+| Kumudhini Reddicherla  | Front-end Dev | kumudhini1234 | kreddicherla@myseneca.ca |
+| Srushti Jitendrakumar Patel  | Front-end Dev | srushti674 | spatel674@myseneca.ca |
+| Harkirat Singh  | Back-end Dev | harkirat19 | harkirat-singh6@myseneca.ca |
+
+
 ## Communication
 
 - We will use Slack for quick updates and discussions.
@@ -27,3 +36,7 @@
 
 - Each member is responsible for their assigned tasks and must communicate any challenges they encounter.
 - Members should update the status of their tasks in the project management tool (GitHub Issues).
+
+## Project Timeline
+
+
