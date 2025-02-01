@@ -6,7 +6,6 @@
 | Srushti Jitendrakumar Patel  | Front-end Dev | srushti674 | spatel674@myseneca.ca |
 | Harkirat Singh  | Back-end Dev | harkirat19 | harkirat-singh6@myseneca.ca |
 
-
 ## Communication
 
 - We will use Slack for quick updates and discussions.
@@ -39,4 +38,51 @@
 
 ## Project Timeline
 
+#### Project Setup & Initial UI
+Duration: 1 week
 
+Tasks:
+- Set up project in React Native with Expo.
+- Install necessary dependencies (Expo, Firebase, Clerk).
+- Implement app font and basic UI structure.
+- Design login screen UI.
+
+#### Authentication and Tab Navigation
+Duration: 1 week
+
+Tasks:
+- Implement Clerk authentication.
+- Set up tab navigation (Home, Favorites, Profile).
+- Configure Firebase backend setup for user data.
+
+#### Pet Listings and Pet Details
+Duration: 1.5 weeks
+
+Tasks:
+- Display pet list with details.
+- Implement Add New Pet feature.
+- Set up pet details screen for each listing.
+
+#### Favorites, Sliders, and Category Display
+Duration: 1 week
+
+Tasks:
+- Implement pet favorites (Mark Favorites, Favorites Tab).
+- Add sliders for filters (age, breed, etc.).
+- Display categories for pet listings.
+
+#### Chat Messaging & Profile Page
+Duration: 1.5 weeks
+
+Tasks:
+- Integrate chat messaging system with inbox.
+- Create a profile page for users.
+- Implement manage post functionality for users to edit listings.
+
+#### Testing, UI Refinements, and Deployment
+Duration: 1 week
+
+Tasks:
+- Conduct thorough testing (unit, UI, and user acceptance).
+- Refine UI components for better usability.
+- Final deployment to hosting platform (Firebase or Vercel).
