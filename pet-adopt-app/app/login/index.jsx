@@ -8,6 +8,7 @@ import {useSSO} from "@clerk/clerk-expo";
 import * as Linking from "expo-linking";
 import {useNavigation} from "@react-navigation/native"; // Import navigation hook
 
+// Custom hook to warm up the web browser for SSO authentication
 export const useWarmUpBrowser = () => {
   useEffect(() => {
     // Preloads the browser for Android devices to reduce authentication load time
@@ -16,7 +17,7 @@ export const useWarmUpBrowser = () => {
       // Cleanup: closes browser when component unmounts
       void WebBrowser.coolDownAsync();
     };
-  }, []);
+  }, []); // Empty dependency array means this effect runs once when the component is mounted
 };
 
 // Handle any pending authentication sessions
