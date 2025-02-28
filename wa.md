@@ -38,51 +38,44 @@
 
 ## Project Timeline
 
-#### Project Setup & Initial UI
-Duration: 1 week
+#### Sprint 3: Navigation and Backend Setup  
 
-Tasks:
-- Set up project in React Native with Expo.
-- Install necessary dependencies (Expo, Firebase, Clerk).
-- Implement app font and basic UI structure.
-- Design login screen UI.
+Tasks:  
+- As a user, I want a **tab bar navigation** so that I can easily switch between different sections of the app.  
+- As a user, I want a **header on the home screen** to display the app title and key actions for better navigation.  
+- As a developer, I want to **set up the backend** so that the app can store and retrieve data efficiently.  
 
-#### Authentication and Tab Navigation
-Duration: 1 week
+#### Sprint 4: Home Screen and Pet Listings  
 
-Tasks:
-- Implement Clerk authentication.
-- Set up tab navigation (Home, Favorites, Profile).
-- Configure Firebase backend setup for user data.
+Tasks:  
+- As a user, I want **sliders on the home screen** to showcase featured pets or categories.  
+- As a user, I want to **view different pet categories** to browse pets based on their type.  
+- As a user, I want to **see a list of available pets** under each category for easy exploration.  
 
-#### Pet Listings and Pet Details
-Duration: 1.5 weeks
+#### Sprint 5: Pet Listings and Pet Details  
 
-Tasks:
-- Display pet list with details.
-- Implement Add New Pet feature.
-- Set up pet details screen for each listing.
+Tasks:  
+- As a user, I want to **see a list of pets with details** so I can explore adoption options.  
+- As a user, I want to **add a new pet listing** so I can list pets for adoption.  
+- As a user, I want a **pet details screen** to view full details of a pet before deciding to adopt.  
 
-#### Favorites, Sliders, and Category Display
-Duration: 1 week
+#### Sprint 6: Favorites and Chat Integration  
 
-Tasks:
-- Implement pet favorites (Mark Favorites, Favorites Tab).
-- Add sliders for filters (age, breed, etc.).
-- Display categories for pet listings.
+Tasks:  
+- As a user, I want to **mark pets as favorites** so I can keep track of the ones I like.  
+- As a user, I want a **favorites tab** to view all my saved pets in one place.  
+- As a user, I want to **initiate a chat with pet owners** to ask questions and discuss adoption.  
 
-#### Chat Messaging & Profile Page
-Duration: 1.5 weeks
+#### Sprint 7: User Profile and Post Management  
 
-Tasks:
-- Integrate chat messaging system with inbox.
-- Create a profile page for users.
-- Implement manage post functionality for users to edit listings.
+Tasks:  
+- As a user, I want a **profile page** where I can view and edit my personal information.  
+- As a user, I want a **chat inbox** to manage all my conversations in one place.  
+- As a user, I want to **manage my posts** by updating or deleting pet listings.  
 
-#### Testing, UI Refinements, and Deployment
-Duration: 1 week
+#### Sprint 8: Final Touch-ups and Improvements  
 
-Tasks:
-- Conduct thorough testing (unit, UI, and user acceptance).
-- Refine UI components for better usability.
-- Final deployment to hosting platform (Firebase or Vercel).
+Tasks:  
+- As a user, I want **final touch-ups** to ensure the app runs smoothly and looks polished.  
+- As a user, I want **bug fixes and UI improvements** to enhance the overall user experience.  
+- As a user, I want **final testing** to ensure everything works as expected before launch.  
