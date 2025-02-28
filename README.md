@@ -6,7 +6,7 @@
 | Pranjal Vijaykumar Parmar  | Back-end Dev | pparmar25 | pparmar25@myseneca.ca |
 | Kumudhini Reddicherla  | Front-end Dev | kumudhini1234 | kreddicherla@myseneca.ca |
 | Srushti Jitendrakumar Patel  | Front-end Dev | srushti674 | spatel674@myseneca.ca |
-| Harkirat Singh  | Back-end Dev | harkirat19 | harkirat-singh6@myseneca.ca |
+| Harkirat Singh  | Full-Stack Dev | harkirat19 | harkirat-singh6@myseneca.ca |
 
 
 
