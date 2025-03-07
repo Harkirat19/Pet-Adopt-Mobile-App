@@ -32,7 +32,7 @@ export default function TabLayout() {
         options={{
             title: 'Inbox',
             headerShown: false,
-            tabBarIcon: ({color})=><Ionicons name="chatbubble" size={24} color="black" />
+            tabBarIcon: ({color})=><Ionicons name="chatbubble" size={24} color={color} />
 
           }}
         
