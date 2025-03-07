@@ -33,7 +33,7 @@ export default function LoginScreen() {
     try {
       const {createdSessionId} = await startSSOFlow({
         strategy: "oauth_google",
-        redirectUrl: Linking.createURL("/home", {scheme: "myapp"}),
+        redirectUrl: Linking.createURL("/(tabs)/home", {scheme: "myapp"}),
       });
 
       if (createdSessionId) {

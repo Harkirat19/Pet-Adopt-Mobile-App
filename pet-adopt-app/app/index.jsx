@@ -22,10 +22,12 @@ export default function Index() {
         flex: 1,
       }}
     >
-      {/* Link to navigate to the Login screen */}
-      <Link href={"/login"}>
-        <Text> Go To Login Screen</Text>
-      </Link>
+      {user?
+      <Redirect href='/(tabs)/home'/>
+      :<Redirect href={'/login'}/>
+    }
+      
+      
     </View>
   );
 }
