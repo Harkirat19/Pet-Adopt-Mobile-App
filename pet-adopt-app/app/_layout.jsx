@@ -1,3 +1,4 @@
+// app/_layout.jsx
 import {useFonts} from "expo-font";
 import {Stack} from "expo-router";
 import {ClerkProvider, ClerkLoaded} from "@clerk/clerk-expo";
@@ -45,20 +46,23 @@ export default function RootLayout() {
       tokenCache={tokenCache}
       publishableKey={publishableKey}
     >
-      <Stack>
-        <Stack.Screen name="index" />
-        <Stack.Screen name="(tabs)"
-        options={{
-          headerShown: false
-        }}
-        />
-        <Stack.Screen
-          name="login/index"
-          options={{
-            headerShown: false,
-          }}
-        />
-      </Stack>
+      <ClerkLoaded>
+        <Stack>
+          <Stack.Screen name="index" />
+          <Stack.Screen
+            name="(tabs)"
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="login/index"
+            options={{
+              headerShown: false,
+            }}
+          />
+        </Stack>
+      </ClerkLoaded>
     </ClerkProvider>
   );
 }

@@ -1,23 +1,23 @@
-import {View, Text, Pressable} from "react-native";
-import {useEffect, useCallback} from "react";
-import {Image} from "react-native";
-import React from "react";
-import Colors from "./../../constants/Colors";
+// app/login/index.jsx
+
+import {View, Text, Pressable, Image} from "react-native";
+import React, {useEffect, useCallback} from "react";
 import * as WebBrowser from "expo-web-browser";
-import {useSSO} from "@clerk/clerk-expo";
 import * as Linking from "expo-linking";
-import {useNavigation} from "@react-navigation/native"; // Import navigation hook
+import {useRouter} from "expo-router";
+import {useSSO} from "@clerk/clerk-expo";
+import Colors from "./../../constants/Colors";
 
 // Custom hook to warm up the web browser for SSO authentication
 export const useWarmUpBrowser = () => {
   useEffect(() => {
-    // Preloads the browser for Android devices to reduce authentication load time
+    // Preload the browser to reduce authentication load time
     void WebBrowser.warmUpAsync();
     return () => {
-      // Cleanup: closes browser when component unmounts
+      // Cleanup when component unmounts
       void WebBrowser.coolDownAsync();
     };
-  }, []); // Empty dependency array means this effect runs once when the component is mounted
+  }, []);
 };
 
 // Handle any pending authentication sessions
@@ -26,49 +26,38 @@ WebBrowser.maybeCompleteAuthSession();
 export default function LoginScreen() {
   useWarmUpBrowser();
 
+  // Retrieve the Clerk SSO function
   const {startSSOFlow} = useSSO();
-  const navigation = useNavigation(); // Initialize navigation hook
+
+  // Use Expo Router instead of React Navigation
+  const router = useRouter();
 
   const onPress = useCallback(async () => {
     try {
+      // Initiate the SSO flow (Google OAuth)
       const {createdSessionId} = await startSSOFlow({
         strategy: "oauth_google",
         redirectUrl: Linking.createURL("/(tabs)/home", {scheme: "myapp"}),
       });
 
+      // If a session was created, go to the home screen
       if (createdSessionId) {
-        // Redirect to the Home screen after successful login
-        navigation.replace("home"); // Use replace to remove the current screen from the stack
+        router.replace("(tabs)/home");
       } else {
-        // Handle signIn or signUp for next steps such as MFA
+        // Handle additional steps (e.g., MFA) here
       }
     } catch (err) {
-      console.error("SSOF error", err);
+      console.error("SSO flow error:", err);
     }
-  }, [navigation]);
+  }, [router, startSSOFlow]);
 
   return (
-    <View
-      style={{
-        backgroundColor: Colors.WHITE,
-        height: "100%",
-      }}
-    >
+    <View style={{backgroundColor: Colors.WHITE, height: "100%"}}>
       <Image
         source={require("./../../assets/images/login.png")}
-        style={{
-          width: "100%",
-          height: 500,
-        }}
+        style={{width: "100%", height: 500}}
       />
-
-      <View
-        style={{
-          padding: 20,
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
+      <View style={{padding: 20, alignItems: "center"}}>
         <Text
           style={{
             fontFamily: "outfit-bold",

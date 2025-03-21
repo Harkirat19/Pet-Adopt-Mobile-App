@@ -1,25 +1,30 @@
-import {View, Text} from "react-native";
-import React from "react";
-import Header from '../../components/Home/Header.jsx'
+// app/(tabs)/home.jsx
+import React, {useState, useCallback} from "react";
+import {ScrollView, RefreshControl, View} from "react-native";
+import Header from "../../components/Home/Header.jsx";
+import * as Updates from "expo-updates";
 
 export default function Home() {
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await Updates.reloadAsync();
+    setRefreshing(false);
+  }, []);
+
   return (
-    <View style={{
-      padding: 20, marginTop: 20
-    }}>
-      
-      {/* Header*/}
-      <Header/>
-
-      {/* Slider */}
-
-      {/* Category */}
-
-      {/* List of Pets */}
-
-      {/* Add new Pet option */}
-
-      
-    </View>
+    <ScrollView
+      contentContainerStyle={{padding: 20, marginTop: 20}}
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+        />
+      }
+    >
+      <Header />
+      {/* Other components */}
+    </ScrollView>
   );
 }

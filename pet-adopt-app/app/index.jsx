@@ -1,3 +1,5 @@
+// app/index.jsx
+
 import {useUser} from "@clerk/clerk-expo"; // Importing Clerk authentication hook
 import {Link, Redirect, useRootNavigationState, useRouter} from "expo-router";
 import {useEffect} from "react";
