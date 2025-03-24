@@ -50,7 +50,7 @@ Tasks:
 Tasks:  
 - As a user, I want to **view different pet categories** to browse pets based on their type.  
 - As a user, I want to **see a list of available pets** under each category for easy exploration.
-- As a user, I want to **see the details of each pet ** so I can know more about the pet.
+- As a user, I want to **see the details of each pet** so I can know more about the pet.
 - As a developer, I want to design and implement a database to store pet details (e.g., name, breed, age, category, status) so the app can retrieve and display accurate information to users.
 
 #### Sprint 5: Pet Listings and Pet Details  
