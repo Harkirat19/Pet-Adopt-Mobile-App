@@ -5,7 +5,7 @@ import {db} from './../../config/FirebaseConfig'
 import { useState } from 'react'
 import Colors from './../../constants/Colors'
 
-export default function Category() {
+export default function Category({category}) {
   
 
     const [categoryList, setCategoryList]=useState([]);
@@ -39,7 +39,10 @@ export default function Category() {
       numColumns={4}
       renderItem={({item,index})=>(
         <TouchableOpacity 
-         onPress={()=>setSelectedCategory(item.name)}
+         onPress={()=>{
+            setSelectedCategory(item.name);
+            category(item.name)
+        }}
         style={{
             flex: 1
         }}>
