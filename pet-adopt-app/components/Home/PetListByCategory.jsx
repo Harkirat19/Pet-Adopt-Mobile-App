@@ -1,9 +1,9 @@
-import { View, FlatList, Text } from 'react-native'
-import React, { useState, useEffect } from 'react'
-import Category from './Category'
-import PetListItem from './PetListItem' 
-import { collection, getDocs, query, where } from 'firebase/firestore'
-import { db } from '../../firebaseConfig' 
+import {View, FlatList, Text, Image} from "react-native";
+import React, {useState, useEffect} from "react";
+import Category from "./Category";
+import PetListItem from "./PetListItem";
+import {collection, getDocs, query, where} from "firebase/firestore";
+import {db} from "../../config/FirebaseConfig";
 
 export default function PetListByCategory() {
   const [petList, setPetList] = useState([]);
@@ -12,16 +12,16 @@ export default function PetListByCategory() {
   const GetPetList = async (category) => {
     setLoader(true);
     setPetList([]);
-    const q = query(collection(db, 'Pets'), where('category', '==', category));
+    const q = query(collection(db, "Pets"), where("category", "==", category));
     const querySnapshot = await getDocs(q);
-    querySnapshot.forEach(doc => {
-      setPetList(prev => [...prev, doc.data()]);
+    querySnapshot.forEach((doc) => {
+      setPetList((prev) => [...prev, doc.data()]);
     });
     setLoader(false);
-  }
+  };
 
   useEffect(() => {
-    GetPetList('Dogs');
+    GetPetList("Dogs");
   }, []);
 
   return (
@@ -30,15 +30,13 @@ export default function PetListByCategory() {
 
       <FlatList
         data={petList}
-        style={{ marginTop: 10 }}
+        style={{marginTop: 10}}
         horizontal={true}
         refreshing={loader}
-        onRefresh={() => GetPetList('Dogs')}
+        onRefresh={() => GetPetList("Dogs")}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
-          <PetListItem pet={item} />
-        )}
+        renderItem={({item}) => <PetListItem pet={item} />}
       />
     </View>
-  )
+  );
 }
