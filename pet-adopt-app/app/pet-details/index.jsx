@@ -1,4 +1,4 @@
-import {View, Text, ScrollView, TouchableOpacity, StyleSheet} from "react-native";
+import {View, Text, ScrollView, TouchableOpacity, StyleSheet, Image} from "react-native";
 import React, {useEffect} from "react";
 import Colors from "../../constants/Colors.ts";
 import {useLocalSearchParams} from "expo-router";
@@ -17,6 +17,20 @@ export default function PetDetails() {
     navigation.setOptions({
       headerTransparent: true,
       headerTitle: "",
+      // hide that “tabs” title:
+      headerBackTitleVisible: false,
+      // render our arrow as the back button:
+      headerLeft: () => (
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={{marginLeft: 16}}
+        >
+          <Image
+            source={require("../../assets/images/backArrow.png")}
+            style={{width: 24, height: 24}}
+          />
+        </TouchableOpacity>
+      ),
     });
   }, []);
 
@@ -29,17 +43,14 @@ export default function PetDetails() {
         <OwnerInfo pet={pet} />
         <View style={{height: 70}}></View>
       </ScrollView>
-      <View style={styles?.bottomContainer}>
-        <TouchableOpacity>
-          <Text
-            style={{
-              textAlign: "center",
-              fontFamily: "outfit-medium",
-              fontSize: 20,
-            }}
-          >
-            Adopt Me
-          </Text>
+      <View style={styles.bottomContainer}>
+        <TouchableOpacity
+          style={styles.adoptBtn}
+          onPress={() => {
+            /* adopt logic */
+          }}
+        >
+          <Text style={styles.adoptBtnText}>Adopt Me</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -47,13 +58,25 @@ export default function PetDetails() {
 }
 
 const styles = StyleSheet.create({
-  adoptBtn: {
-    padding: 15,
-    backgroundColor: Colors.PRIMARY,
-  },
   bottomContainer: {
     position: "absolute",
-    width: "100%",
     bottom: 0,
+    width: "100%",
+    // alignItems: "center",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+  },
+  adoptBtn: {
+    width: "100%",
+    backgroundColor: Colors.PRIMARY,
+    paddingVertical: 11,
+    // paddingHorizontal: 40,
+    alignItems: "center",
+    borderRadius: 8,
+  },
+  adoptBtnText: {
+    fontFamily: "outfit-medium",
+    fontSize: 21,
+    // textAlign: "center",
   },
 });

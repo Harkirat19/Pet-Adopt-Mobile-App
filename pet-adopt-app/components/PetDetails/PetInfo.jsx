@@ -20,7 +20,7 @@ export default function PetInfo({pet}) {
         style={{
           padding: 20,
           display: "flex",
-          fexDirection: "row",
+          flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
         }}

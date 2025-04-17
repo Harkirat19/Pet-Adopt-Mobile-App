@@ -2,19 +2,17 @@ import {View, Text, Image} from "react-native";
 import React from "react";
 import Colors from "../../constants/Colors";
 
-export default function PetSubInfoCard(icon, title, value) {
+export default function PetSubInfoCard({icon, title, value}) {
   return (
     <View
       style={{
-        display: "flex",
+        flex: 1,
         flexDirection: "row",
         alignItems: "center",
         backgroundColor: Colors.WHITE,
         padding: 10,
         margin: 5,
         borderRadius: 8,
-        gap: 10,
-        flex: 1,
       }}
     >
       <Image
@@ -22,13 +20,11 @@ export default function PetSubInfoCard(icon, title, value) {
         style={{
           width: 40,
           height: 40,
+          resizeMode: "contain",
+          marginRight: 10,
         }}
       />
-      <View
-        style={{
-          flex: 1,
-        }}
-      >
+      <View style={{flex: 1}}>
         <Text
           style={{
             fontFamily: "outfit",
@@ -42,6 +38,7 @@ export default function PetSubInfoCard(icon, title, value) {
           style={{
             fontFamily: "outfit-medium",
             fontSize: 16,
+            color: Colors.BLACK,
           }}
         >
           {value}

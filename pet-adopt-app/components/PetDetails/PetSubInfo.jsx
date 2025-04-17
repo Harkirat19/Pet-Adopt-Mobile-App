@@ -19,7 +19,7 @@ export default function PetSubInfo({pet}) {
         <PetSubInfoCard
           icon={require("./../../assets/images/calendar.png")}
           title={"Age"}
-          value={pet?.age + "Years"}
+          value={pet?.age + " Years"}
         />
         <PetSubInfoCard
           icon={require("./../../assets/images/bone.png")}
@@ -41,7 +41,7 @@ export default function PetSubInfo({pet}) {
         <PetSubInfoCard
           icon={require("./../../assets/images/weight.png")}
           title={"Weight"}
-          value={pet?.weight + "Kg"}
+          value={pet?.weight + " Kg"}
         />
       </View>
     </View>
