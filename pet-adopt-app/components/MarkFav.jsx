@@ -1,40 +1,42 @@
-import {View, Text, Pressable} from "react-native";
+import {View, Pressable} from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import React, {useEffect} from "react";
-import {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useUser} from "@clerk/clerk-expo";
 import Shared from "./../Shared/Shared";
 
-export default function MarkFav(pet, color = "black") {
+export default function MarkFav({pet}) {
   const {user} = useUser();
   const [favList, setFavList] = useState([]);
 
   useEffect(() => {
     user && GetFav();
   }, [user]);
+
   const GetFav = async () => {
     const result = await Shared.GetFavList(user);
-    console.log(result);
+    console.log("Fetched favourites:", result);
     setFavList(result?.favourites ? result?.favourites : []);
   };
 
   const AddToFav = async () => {
     const favResult = favList;
-    favResult.push(pet.id);
-    await Shared.UpdateFav(user, favourites);
-    GetFav();
-  };
-
-  const removeFromFav = async () => {
-    const favResult = favList.filter((item) => item != pet.id);
+    favResult.push(pet?.id);
     await Shared.UpdateFav(user, favResult);
     GetFav();
   };
 
+  const removeFromFav = async () => {
+    const favResult = favList.filter((item) => item !== pet?.id);
+    await Shared.UpdateFav(user, favResult);
+    GetFav();
+  };
+
+  // const isFav = favList.includes(pet.id);
+
   return (
     <View>
       {favList?.includes(pet.id) ? (
-        <Pressable onPress={removeFromFav}>
+        <Pressable onPress={() => removeFromFav()}>
           <Ionicons
             name="heart"
             size={30}
@@ -46,7 +48,7 @@ export default function MarkFav(pet, color = "black") {
           <Ionicons
             name="heart-outline"
             size={30}
-            color={color}
+            color="black"
           />
         </Pressable>
       )}

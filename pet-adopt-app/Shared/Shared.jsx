@@ -1,3 +1,6 @@
+import {db} from "./../config/FirebaseConfig";
+import {doc, getDoc, setDoc, updateDoc} from "firebase/firestore";
+
 export const GetFavList = async (user) => {
   const docSnap = await getDoc(doc(db, "UserFavPet", user?.primaryEmailAddress?.emailAddress));
   if (docSnap?.exists()) {
@@ -5,7 +8,7 @@ export const GetFavList = async (user) => {
   } else {
     await setDoc(doc(db, "UserFavPet", user?.primaryEmailAddress?.emailAddress), {
       email: user?.primaryEmailAddress?.emailAddress,
-      favourites,
+      favourites: [],
     });
   }
 };
@@ -13,10 +16,10 @@ export const GetFavList = async (user) => {
 const UpdateFav = async (user, favourites) => {
   const docRef = doc(db, "UserFavPet", user?.primaryEmailAddress?.emailAddress);
   try {
-    await updateDoc(docRef, {
-      favourites: favourites,
-    });
-  } catch (e) {}
+    await updateDoc(docRef, {favourites: favourites});
+  } catch (e) {
+    console.error("Error saving favourites:", e);
+  }
 };
 
 export default {

@@ -61,6 +61,7 @@ export default function PetListItem({pet}) {
           style={{
             color: Colors.GRAY,
             fontFamily: "outfit",
+            fontSize: 11,
           }}
         >
           {pet?.breed}
