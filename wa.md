@@ -38,6 +38,8 @@
 
 ## Project Timeline
 
+## Semester 6 Sprints:
+
 #### Sprint 3: Navigation and Backend Setup  
 
 Tasks:  
@@ -53,29 +55,32 @@ Tasks:
 - As a user, I want to **see the details of each pet** so I can know more about the pet.
 - As a developer, I want to design and implement a database to store pet details (e.g., name, breed, age, category, status) so the app can retrieve and display accurate information to users.
 
-#### Sprint 5: Pet Listings and Pet Details  
+#### Sprint 5: Favorites and Pet Details  
 
 Tasks:   
-- As a user, I want to **add a new pet listing** so I can list pets for adoption.  
+- As a user, I want to **mark pets as favorites** so I can keep track of the ones I like.  
 - As a user, I want a **pet details screen** to view full details of a pet before deciding to adopt.  
 
-#### Sprint 6: Favorites and Chat Integration  
+## Semester 7 Sprints:
+
+#### Sprint 6: Pet Listings and Favourites Tab
 
 Tasks:  
-- As a user, I want to **mark pets as favorites** so I can keep track of the ones I like.  
-- As a user, I want a **favorites tab** to view all my saved pets in one place.  
-- As a user, I want to **initiate a chat with pet owners** to ask questions and discuss adoption.  
+- As a user, I want to **add a new pet listing** so I can list pets for adoption.  
+- As a user, I want a **favorites tab** to view all my liked/saved pets in one place.  
 
-#### Sprint 7: User Profile and Post Management  
+#### Sprint 7: Chat Messaging & Chat Inbox
+
+Tasks:  
+- As a user, I want to **initiate a chat with pet owners** to ask questions and discuss adoption. 
+- As a user, I want a **chat inbox** to manage all my conversations in one place.
+
+
+#### Sprint 8: User Profile and Post Management  
 
 Tasks:  
 - As a user, I want a **profile page** where I can view and edit my personal information.  
-- As a user, I want a **chat inbox** to manage all my conversations in one place.  
+ 
 - As a user, I want to **manage my posts** by updating or deleting pet listings.  
 
-#### Sprint 8: Final Touch-ups and Improvements  
 
-Tasks:  
-- As a user, I want **final touch-ups** to ensure the app runs smoothly and looks polished.  
-- As a user, I want **bug fixes and UI improvements** to enhance the overall user experience.  
-- As a user, I want **final testing** to ensure everything works as expected before launch.  
