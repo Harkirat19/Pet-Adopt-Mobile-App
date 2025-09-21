@@ -1,6 +1,6 @@
 // app/login/index.jsx
 
-import {View, Text, Pressable, Image} from "react-native";
+import {View, Text, Pressable, Image, Platform} from "react-native";
 import React, {useEffect, useCallback} from "react";
 import * as WebBrowser from "expo-web-browser";
 import * as Linking from "expo-linking";
@@ -11,11 +11,15 @@ import Colors from "./../../constants/Colors";
 // Custom hook to warm up the web browser for SSO authentication
 export const useWarmUpBrowser = () => {
   useEffect(() => {
-    // Preload the browser to reduce authentication load time
-    void WebBrowser.warmUpAsync();
+    // Preload the browser to reduce authentication load time (only on native platforms)
+    if (Platform.OS !== 'web') {
+      void WebBrowser.warmUpAsync();
+    }
     return () => {
-      // Cleanup when component unmounts
-      void WebBrowser.coolDownAsync();
+      // Cleanup when component unmounts (only on native platforms)
+      if (Platform.OS !== 'web') {
+        void WebBrowser.coolDownAsync();
+      }
     };
   }, []);
 };

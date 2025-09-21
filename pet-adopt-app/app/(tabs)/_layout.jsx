@@ -46,6 +46,16 @@ export default function TabLayout() {
           }}
         />
 
+        <Tabs.Screen name="lostfound"
+        options={{
+            href: null,
+            title: 'Lost & Found',
+            headerShown: false,
+            tabBarIcon: ({color})=><Ionicons name="search" size={24} color={color} />
+
+          }}
+        />
+
     </Tabs>
   )
 }
