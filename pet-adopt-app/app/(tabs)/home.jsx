@@ -2,6 +2,7 @@ import React, {useState, useCallback} from "react";
 import {Text, TouchableOpacity, StyleSheet, FlatList, View} from "react-native";
 import Colors from "../../constants/Colors.ts";
 import Header from "../../components/Home/Header.jsx";
+import {Link} from "expo-router";
 import Slider from "../../components/Home/Slider.jsx";
 import * as Updates from "expo-updates";
 import PetListByCategory from "../../components/Home/PetListByCategory.jsx";
@@ -22,14 +23,17 @@ export default function Home() {
       <Header />
       <Slider />
       <PetListByCategory />
-      <TouchableOpacity style={styles.addNewPetContainer}>
+      <Link
+        href={"/add-new-pet"}
+        style={styles.addNewPetContainer}
+      >
         <MaterialIcons
           name="pets"
           size={24}
           color={Colors.PRIMARY}
         />
         <Text style={styles.addNewPetText}>Add New Pet</Text>
-      </TouchableOpacity>
+      </Link>
     </View>
   );
 
@@ -54,6 +58,7 @@ const styles = StyleSheet.create({
   addNewPetContainer: {
     flexDirection: "row",
     alignItems: "center",
+    textAlign: "center",
     padding: 20,
     marginTop: 20,
     backgroundColor: Colors.LIGHT_PRIMARY,
