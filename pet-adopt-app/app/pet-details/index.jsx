@@ -1,9 +1,14 @@
-import {View, Text, ScrollView, TouchableOpacity, StyleSheet, Image} from "react-native";
-import React, {useEffect} from "react";
+import { View, ScrollView, TouchableOpacity, StyleSheet, Image, Text } from "react-native";
+import React, { useEffect } from "react";
 import Colors from "../../constants/Colors.ts";
-import {useLocalSearchParams} from "expo-router";
+import { useUser } from "@clerk/clerk-expo";
+import { useRouter, useLocalSearchParams, useNavigation } from "expo-router";
 
-import {useNavigation} from "expo-router";
+// Firestore imports
+import { db } from "../../config/FirebaseConfig";
+import { collection, query, where, getDocs, setDoc, doc } from "firebase/firestore";
+
+// Components
 import PetInfo from "../../components/PetDetails/PetInfo";
 import PetSubInfo from "../../components/PetDetails/PetSubInfo";
 import AboutPet from "../../components/PetDetails/AboutPet";
@@ -12,44 +17,70 @@ import OwnerInfo from "../../components/PetDetails/OwnerInfo";
 export default function PetDetails() {
   const pet = useLocalSearchParams();
   const navigation = useNavigation();
+  const { user } = useUser();
+  const router = useRouter();
 
   useEffect(() => {
     navigation.setOptions({
       headerTransparent: true,
       headerTitle: "",
-      // hide that “tabs” title:
       headerBackTitleVisible: false,
-      // render our arrow as the back button:
       headerLeft: () => (
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={{marginLeft: 16}}
-        >
+        <TouchableOpacity onPress={() => navigation.goBack()} style={{ marginLeft: 16 }}>
           <Image
             source={require("../../assets/images/backArrow.png")}
-            style={{width: 24, height: 24}}
+            style={{ width: 24, height: 24 }}
           />
         </TouchableOpacity>
       ),
     });
   }, []);
 
+  const InitiateChat = async () => {
+    try {
+      const userEmail = user?.primaryEmailAddress?.emailAddress;
+      const petEmail = pet?.email;  // actual owner email
+  
+      if (!userEmail || !petEmail) return;
+  
+      // Sort to ensure unique chat ID
+      const [email1, email2] = [userEmail, petEmail].sort();
+      const docId = `${email1}_${email2}`;
+  
+      const q = query(collection(db, 'Chat'), where('id', '==', docId));
+      const querySnapshot = await getDocs(q);
+  
+      if (querySnapshot.docs.length > 0) {
+        router.push({ pathname: '/chat', params: { id: docId } });
+      } else {
+        await setDoc(doc(db, 'Chat', docId), {
+          id: docId,
+          users: [
+            { email: userEmail, imageUrl: user?.imageUrl || '', name: user?.fullName || 'You' },
+            { email: petEmail, imageUrl: pet?.userImage || '', name: pet?.userName || 'Owner' }
+          ]
+        });
+  
+        router.push({ pathname: '/chat', params: { id: docId } });
+      }
+    } catch (error) {
+      console.log("Error initiating chat:", error);
+    }
+  };
+  
+
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <ScrollView>
         <PetInfo pet={pet} />
         <PetSubInfo pet={pet} />
         <AboutPet pet={pet} />
         <OwnerInfo pet={pet} />
-        <View style={{height: 70}}></View>
+        <View style={{ height: 70 }} />
       </ScrollView>
+
       <View style={styles.bottomContainer}>
-        <TouchableOpacity
-          style={styles.adoptBtn}
-          onPress={() => {
-            /* adopt logic */
-          }}
-        >
+        <TouchableOpacity onPress={InitiateChat} style={styles.adoptBtn}>
           <Text style={styles.adoptBtnText}>Adopt Me</Text>
         </TouchableOpacity>
       </View>
@@ -62,7 +93,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     width: "100%",
-    // alignItems: "center",
     paddingHorizontal: 20,
     paddingVertical: 10,
   },
@@ -70,13 +100,11 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: Colors.PRIMARY,
     paddingVertical: 11,
-    // paddingHorizontal: 40,
     alignItems: "center",
     borderRadius: 8,
   },
   adoptBtnText: {
     fontFamily: "outfit-medium",
     fontSize: 21,
-    // textAlign: "center",
   },
 });
