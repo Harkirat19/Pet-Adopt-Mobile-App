@@ -1,9 +1,9 @@
 import React from "react";
-import {View, Text, StyleSheet, Image} from "react-native";
+import {View, Text, StyleSheet, Image, TouchableOpacity} from "react-native";
 import Colors from "../../constants/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-export default function OwnerInfo({pet}) {
+export default function OwnerInfo({pet, onSendPress}) {
   return (
     <View style={styles.container}>
       <View style={styles.row}>
@@ -20,11 +20,16 @@ export default function OwnerInfo({pet}) {
           <Text style={styles.userRole}>Pet Owner</Text>
         </View>
       </View>
-      <Ionicons
-        name="send-sharp"
-        size={24}
-        color={Colors.PRIMARY}
-      />
+      <TouchableOpacity
+        onPress={onSendPress}
+        style={styles.sendButton}
+      >
+        <Ionicons
+          name="send-sharp"
+          size={24}
+          color={Colors.PRIMARY}
+        />
+      </TouchableOpacity>
     </View>
   );
 }
@@ -55,5 +60,9 @@ const styles = StyleSheet.create({
   userRole: {
     fontFamily: "outfit",
     color: Colors.GRAY,
+  },
+  sendButton: {
+    padding: 8,
+    borderRadius: 8,
   },
 });
