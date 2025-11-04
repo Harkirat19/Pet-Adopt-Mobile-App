@@ -1,15 +1,17 @@
-import React, {useState, useCallback} from "react";
-import {Text, TouchableOpacity, StyleSheet, FlatList, View} from "react-native";
+import React, { useState, useCallback } from "react";
+import { Text, TouchableOpacity, StyleSheet, ScrollView, View, RefreshControl } from "react-native";
 import Colors from "../../constants/Colors.ts";
 import Header from "../../components/Home/Header.jsx";
-import {Link} from "expo-router";
+import { Link } from "expo-router";
 import Slider from "../../components/Home/Slider.jsx";
+import SearchBar from "../../components/Home/SearchBar.jsx";
 import * as Updates from "expo-updates";
 import PetListByCategory from "../../components/Home/PetListByCategory.jsx";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 export default function Home() {
   const [refreshing, setRefreshing] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
@@ -17,36 +19,27 @@ export default function Home() {
     setRefreshing(false);
   }, []);
 
-  // Combine your static components into one header that will be rendered at the top of the FlatList.
-  const renderHeader = () => (
-    <View>
+  return (
+    <ScrollView
+      contentContainerStyle={styles.contentContainer}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    >
       <Header />
       <Slider />
-      <PetListByCategory />
-      <Link
-        href={"/add-new-pet"}
-        style={styles.addNewPetContainer}
-      >
-        <MaterialIcons
-          name="pets"
-          size={24}
-          color={Colors.PRIMARY}
-        />
+
+      {/*  SearchBar with stable state */}
+      <SearchBar value={searchTerm} onChange={setSearchTerm} />
+
+      {/*  Pass searchTerm prop to filter pets */}
+      <PetListByCategory searchTerm={searchTerm} />
+
+      <Link href={"/add-new-pet"} style={styles.addNewPetContainer}>
+        <MaterialIcons name="pets" size={24} color={Colors.PRIMARY} />
         <Text style={styles.addNewPetText}>Add New Pet</Text>
       </Link>
-    </View>
-  );
-
-  return (
-    <FlatList
-      data={[]} // No list items needed
-      renderItem={() => null} // Render nothing for list items
-      ListHeaderComponent={renderHeader}
-      // Using FlatList's built-in refreshing support.
-      onRefresh={onRefresh}
-      refreshing={refreshing}
-      contentContainerStyle={styles.contentContainer}
-    />
+    </ScrollView>
   );
 }
 
