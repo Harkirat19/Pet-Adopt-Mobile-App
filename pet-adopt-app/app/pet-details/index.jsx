@@ -156,7 +156,7 @@ export default function PetDetails() {
         <View style={{height: 70}} />
       </ScrollView>
 
-      {/* FULLSCREEN IMAGE VIEWER (Modal so touches always work) */}
+      {/* IMAGE VIEWER MODAL */}
       <Modal
         visible={showViewer}
         transparent
