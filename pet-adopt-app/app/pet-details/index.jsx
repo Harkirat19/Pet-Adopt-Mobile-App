@@ -1,16 +1,25 @@
-import {View, ScrollView, TouchableOpacity, StyleSheet, Image, Text, Share, Platform} from "react-native";
-import React, {useEffect, useState, useCallback} from "react";
-import Colors from "../../constants/Colors.ts";
+import {
+  View,
+  ScrollView,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  Text,
+  FlatList,
+  Share,
+  Platform,
+  Modal,
+} from "react-native";
+import React, {useEffect, useState} from "react";
+import Colors from "../../constants/Colors";
 import {useUser} from "@clerk/clerk-expo";
 import {useRouter, useLocalSearchParams, useNavigation} from "expo-router";
 import * as Linking from "expo-linking";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-// Firestore imports
 import {db} from "../../config/FirebaseConfig";
 import {collection, query, where, getDocs, setDoc, doc, getDoc} from "firebase/firestore";
 
-// Components
 import PetInfo from "../../components/PetDetails/PetInfo";
 import PetSubInfo from "../../components/PetDetails/PetSubInfo";
 import AboutPet from "../../components/PetDetails/AboutPet";
@@ -21,28 +30,51 @@ export default function PetDetails() {
   const navigation = useNavigation();
   const {user} = useUser();
   const router = useRouter();
+
+  const [showViewer, setShowViewer] = useState(false);
+  const [viewerIndex, setViewerIndex] = useState(0);
   const [loadedPet, setLoadedPet] = useState(null);
 
   const effectivePet = pet?.name ? pet : loadedPet;
   const petId = pet?.id || loadedPet?.id;
 
-  // If opened via deep link with only id param, fetch the pet from Firestore
+  // Build image array
+  const getPetImages = () => {
+    if (!effectivePet) return [];
+
+    if (effectivePet.petImages && Array.isArray(effectivePet.petImages)) {
+      return effectivePet.petImages.map((uri, index) => ({
+        id: `img_${index}`,
+        uri,
+        isCover: index === (effectivePet.coverImageIndex || 0),
+      }));
+    }
+
+    if (effectivePet.imageUrl) {
+      return [{id: "1", uri: effectivePet.imageUrl, isCover: true}];
+    }
+
+    return [];
+  };
+
+  const petImages = getPetImages();
+
+  // If opened with only ?id= fetch full document
   useEffect(() => {
-    const loadByIdIfNeeded = async () => {
+    const loadById = async () => {
       try {
         if (!pet?.name && pet?.id && !loadedPet) {
           const snap = await getDoc(doc(db, "Pets", pet.id));
-          if (snap.exists()) {
-            setLoadedPet(snap.data());
-          }
+          if (snap.exists()) setLoadedPet(snap.data());
         }
       } catch (e) {
-        console.log("Error loading pet by id:", e);
+        console.log("Error loading pet:", e);
       }
     };
-    loadByIdIfNeeded();
+    loadById();
   }, [pet?.id]);
 
+  // Header config
   useEffect(() => {
     navigation.setOptions({
       headerTransparent: true,
@@ -59,48 +91,16 @@ export default function PetDetails() {
           />
         </TouchableOpacity>
       ),
-      headerRight: () => (
-        <TouchableOpacity
-          onPress={async () => {
-            try {
-              if (!petId) return;
-              const url = Linking.createURL("/pet-details", {scheme: "myapp"}) + `?id=${petId}`;
-              await Share.share(
-                Platform.select({
-                  ios: {message: url, url},
-                  android: {message: url},
-                  default: {message: url},
-                })
-              );
-            } catch (e) {
-              console.log("Error sharing link:", e);
-            }
-          }}
-          style={{
-            marginRight: 16,
-            backgroundColor: Colors.PRIMARY,
-            paddingHorizontal: 12,
-            paddingVertical: 6,
-            borderRadius: 8,
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <Ionicons name="share-outline" size={18} color={"#fff"} style={{marginRight: 6}} />
-          <Text style={{fontFamily: "outfit-medium", color: "#fff"}}>Share</Text>
-        </TouchableOpacity>
-      ),
     });
   }, [petId]);
 
   const InitiateChat = async () => {
     try {
       const userEmail = user?.primaryEmailAddress?.emailAddress;
-      const petEmail = (effectivePet?.email); // actual owner email
+      const petEmail = effectivePet?.email;
 
       if (!userEmail || !petEmail) return;
 
-      // Sort to ensure unique chat ID
       const [email1, email2] = [userEmail, petEmail].sort();
       const docId = `${email1}_${email2}`;
 
@@ -125,7 +125,6 @@ export default function PetDetails() {
     }
   };
 
-  // Loading state when deep-linked and data is not yet fetched
   if (!pet?.name && !effectivePet) {
     return (
       <View style={{flex: 1, alignItems: "center", justifyContent: "center"}}>
@@ -137,16 +136,77 @@ export default function PetDetails() {
   return (
     <View style={{flex: 1}}>
       <ScrollView>
-        <PetInfo pet={effectivePet || pet} />
+        <PetInfo
+          pet={effectivePet}
+          petImages={petImages}
+          onImagePress={(index) => {
+            setViewerIndex(index);
+            setShowViewer(true);
+          }}
+        />
+
         <PetSubInfo pet={effectivePet || pet} />
         <AboutPet pet={effectivePet || pet} />
+
         <OwnerInfo
           pet={effectivePet || pet}
           onSendPress={InitiateChat}
         />
+
         <View style={{height: 70}} />
       </ScrollView>
 
+      {/* FULLSCREEN IMAGE VIEWER (Modal so touches always work) */}
+      <Modal
+        visible={showViewer}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setShowViewer(false)}
+      >
+        <View style={styles.modalBackdrop}>
+          {/* Close button */}
+          <TouchableOpacity
+            style={styles.closeBtn}
+            onPress={() => setShowViewer(false)}
+            activeOpacity={0.8}
+          >
+            <Ionicons
+              name="close"
+              size={32}
+              color="#fff"
+            />
+          </TouchableOpacity>
+
+          {/* Main image */}
+          <Image
+            source={{uri: petImages[viewerIndex]?.uri}}
+            style={styles.fullscreenImage}
+            resizeMode="contain"
+          />
+
+          {/* Thumbnails */}
+          {petImages.length > 1 && (
+            <View style={styles.modalThumbRow}>
+              <FlatList
+                horizontal
+                data={petImages}
+                keyExtractor={(img) => img.id}
+                renderItem={({item, index}) => (
+                  <TouchableOpacity onPress={() => setViewerIndex(index)}>
+                    <Image
+                      source={{uri: item.uri}}
+                      style={[styles.modalThumb, index === viewerIndex && styles.modalThumbActive]}
+                    />
+                  </TouchableOpacity>
+                )}
+                showsHorizontalScrollIndicator={false}
+              />
+            </View>
+          )}
+        </View>
+      </Modal>
+
+      {/* ADOPT BUTTON */}
       <View style={styles.bottomContainer}>
         <TouchableOpacity
           onPress={InitiateChat}
@@ -166,16 +226,58 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingHorizontal: 20,
     paddingVertical: 10,
+    backgroundColor: "transparent",
   },
   adoptBtn: {
     width: "100%",
     backgroundColor: Colors.PRIMARY,
-    paddingVertical: 11,
+    paddingVertical: 15,
     alignItems: "center",
-    borderRadius: 8,
+    borderRadius: 12,
   },
   adoptBtnText: {
     fontFamily: "outfit-medium",
-    fontSize: 21,
+    fontSize: 18,
+    color: "#fff",
+  },
+
+  modalBackdrop: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.95)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  closeBtn: {
+    position: "absolute",
+    top: 50,
+    right: 20,
+    padding: 10,
+    zIndex: 2,
+  },
+
+  fullscreenImage: {
+    width: "100%",
+    height: "75%",
+  },
+
+  modalThumbRow: {
+    position: "absolute",
+    bottom: 30,
+    paddingHorizontal: 10,
+  },
+
+  modalThumb: {
+    width: 60,
+    height: 60,
+    borderRadius: 8,
+    marginRight: 10,
+    opacity: 0.6,
+  },
+
+  modalThumbActive: {
+    borderWidth: 2,
+    borderColor: Colors.PRIMARY,
+    opacity: 1,
   },
 });

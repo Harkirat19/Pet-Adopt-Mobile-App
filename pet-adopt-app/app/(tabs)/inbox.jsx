@@ -42,8 +42,6 @@ export default function Inbox() {
       });
 
       setUserList(chats);
-      console.log("Found chats:", chats.length);
-      console.log("Chats data:", chats);
     } catch (error) {
       console.error("Error fetching user list:", error);
     } finally {
