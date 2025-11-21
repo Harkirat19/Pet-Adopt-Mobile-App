@@ -9,9 +9,11 @@ import * as Updates from "expo-updates";
 import PetListByCategory from "../../components/Home/PetListByCategory.jsx";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
+
 export default function Home() {
   const [refreshing, setRefreshing] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+   const [sortValue, setSortValue] = useState("none");
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
@@ -31,6 +33,8 @@ export default function Home() {
 
       {/*  SearchBar with stable state */}
       <SearchBar value={searchTerm} onChange={setSearchTerm} />
+
+      
 
       {/*  Pass searchTerm prop to filter pets */}
       <PetListByCategory searchTerm={searchTerm} />
