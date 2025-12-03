@@ -11,10 +11,20 @@ import {
   Image,
   Modal,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 import {useLocalSearchParams, useNavigation} from "expo-router";
 import {useUser} from "@clerk/clerk-expo";
-import {collection, addDoc, doc, onSnapshot, getDoc, orderBy, query} from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  doc,
+  onSnapshot,
+  getDoc,
+  orderBy,
+  query,
+  deleteDoc,
+} from "firebase/firestore";
 import * as ImagePicker from "expo-image-picker";
 import {db} from "../../config/FirebaseConfig";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -29,6 +39,11 @@ export default function ChatScreen() {
   const [uploading, setUploading] = useState(false);
   const [imageModalVisible, setImageModalVisible] = useState(false);
   const [fullScreenImage, setFullScreenImage] = useState(null);
+  const [selectedMessageId, setSelectedMessageId] = useState(null);
+  const [messageMenuVisible, setMessageMenuVisible] = useState(false);
+  const [longPressTimer, setLongPressTimer] = useState(null);
+
+  const currentUserId = user?.primaryEmailAddress?.emailAddress;
 
   useEffect(() => {
     navigation.setOptions({
@@ -61,8 +76,7 @@ export default function ChatScreen() {
 
         const result = docSnap.data();
         const otherUser = result?.users?.find(
-          (item) =>
-            item.email?.toLowerCase() !== user?.primaryEmailAddress?.emailAddress?.toLowerCase()
+          (item) => item.email?.toLowerCase() !== currentUserId?.toLowerCase()
         );
 
         setOtherUserName(otherUser?.name || "Chat");
@@ -91,7 +105,7 @@ export default function ChatScreen() {
     });
 
     return () => unsubscribe();
-  }, [params.id, user, navigation]);
+  }, [params.id, user, navigation, currentUserId]);
 
   const pickImage = async () => {
     try {
@@ -105,8 +119,8 @@ export default function ChatScreen() {
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
         aspect: [4, 3],
-        quality: 0.3, // Very low quality for smaller base64 size
-        base64: true, // Get base64 directly from ImagePicker
+        quality: 0.3,
+        base64: true,
       });
 
       if (!result.canceled && result.assets[0].base64) {
@@ -128,8 +142,8 @@ export default function ChatScreen() {
       const result = await ImagePicker.launchCameraAsync({
         allowsEditing: true,
         aspect: [4, 3],
-        quality: 0.3, // Very low quality for smaller base64 size
-        base64: true, // Get base64 directly from ImagePicker
+        quality: 0.3,
+        base64: true,
       });
 
       if (!result.canceled && result.assets[0].base64) {
@@ -145,9 +159,8 @@ export default function ChatScreen() {
 
     setUploading(true);
     try {
-      // Check approximate size (base64 string length)
+      // Check approximate size
       if (imageBase64.length > 500000) {
-        // ~375KB when decoded
         alert("Image is too large. Please choose a smaller image or lower quality.");
         setUploading(false);
         return;
@@ -159,9 +172,10 @@ export default function ChatScreen() {
         text: inputText.trim() || "Shared a photo",
         createdAt: new Date(),
         user: {
-          _id: user.primaryEmailAddress?.emailAddress,
+          _id: currentUserId,
           name: user.fullName,
         },
+        status: "sent",
       };
 
       await addDoc(collection(db, "Chat", params.id, "Messages"), newMessage);
@@ -183,9 +197,10 @@ export default function ChatScreen() {
         text: inputText,
         createdAt: new Date(),
         user: {
-          _id: user.primaryEmailAddress?.emailAddress,
+          _id: currentUserId,
           name: user.fullName,
         },
+        status: "sent",
       };
 
       await addDoc(collection(db, "Chat", params.id, "Messages"), newMessage);
@@ -200,8 +215,67 @@ export default function ChatScreen() {
     setImageModalVisible(true);
   };
 
+  const handleImagePress = (imageData, messageId, isCurrentUser) => {
+    if (!isCurrentUser) {
+      // For other user's images, always open full screen
+      openFullScreenImage(imageData);
+      return;
+    }
+  };
+
+  const handleMessageLongPress = (messageId, isCurrentUser) => {
+    if (!isCurrentUser) return; // Can only unsend your own messages
+
+    clearTimeout(longPressTimer);
+    setSelectedMessageId(messageId);
+    setMessageMenuVisible(true);
+  };
+
+  const handleImagePressIn = (messageId, isCurrentUser) => {
+    if (!isCurrentUser) return;
+
+    // Start timer for long press
+    const timer = setTimeout(() => {
+      setSelectedMessageId(messageId);
+      setMessageMenuVisible(true);
+    }, 800); // 800ms for long press on images
+
+    setLongPressTimer(timer);
+  };
+
+  const handleImagePressOut = () => {
+    clearTimeout(longPressTimer);
+  };
+
+  const unsendMessage = async () => {
+    if (!selectedMessageId || !params.id) return;
+
+    Alert.alert("Unsend Message", "Are you sure you want to unsend this message?", [
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+      {
+        text: "Unsend",
+        style: "destructive",
+        onPress: async () => {
+          try {
+            // Delete the message completely
+            await deleteDoc(doc(db, "Chat", params.id, "Messages", selectedMessageId));
+
+            setMessageMenuVisible(false);
+            setSelectedMessageId(null);
+          } catch (error) {
+            console.error("Error unsending message:", error);
+            alert("Failed to unsend message. Please try again.");
+          }
+        },
+      },
+    ]);
+  };
+
   const renderMessage = ({item}) => {
-    const isCurrentUser = item.user?._id === user?.primaryEmailAddress?.emailAddress;
+    const isCurrentUser = item.user?._id === currentUserId;
 
     return (
       <View
@@ -213,13 +287,16 @@ export default function ChatScreen() {
         {!isCurrentUser && <Text style={styles.userName}>{item.user?.name}</Text>}
 
         {item.type === "image" ? (
-          // Image message
+          // Image message with separate tap and long press
           <TouchableOpacity
             style={[
               styles.imageBubble,
               isCurrentUser ? styles.currentUserBubble : styles.otherUserBubble,
             ]}
             onPress={() => openFullScreenImage(item.imageData)}
+            onLongPress={() => handleMessageLongPress(item.id, isCurrentUser)}
+            delayLongPress={800}
+            activeOpacity={0.7}
           >
             {uploading && isCurrentUser ? (
               <View style={styles.imageLoadingContainer}>
@@ -247,16 +324,19 @@ export default function ChatScreen() {
           </TouchableOpacity>
         ) : (
           // Text message
-          <View
+          <TouchableOpacity
             style={[
               styles.messageBubble,
               isCurrentUser ? styles.currentUserBubble : styles.otherUserBubble,
             ]}
+            onLongPress={() => handleMessageLongPress(item.id, isCurrentUser)}
+            delayLongPress={500}
+            activeOpacity={1}
           >
             <Text style={[styles.messageText, isCurrentUser && styles.currentUserMessageText]}>
               {item.text}
             </Text>
-          </View>
+          </TouchableOpacity>
         )}
 
         <Text style={styles.timestamp}>
@@ -264,6 +344,7 @@ export default function ChatScreen() {
             hour: "2-digit",
             minute: "2-digit",
           })}
+          {isCurrentUser && " • You"}
         </Text>
       </View>
     );
@@ -309,6 +390,51 @@ export default function ChatScreen() {
             />
           )}
         </View>
+      </Modal>
+
+      <Modal
+        visible={messageMenuVisible}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => {
+          setMessageMenuVisible(false);
+          setSelectedMessageId(null);
+        }}
+      >
+        <TouchableOpacity
+          style={styles.messageMenuOverlay}
+          activeOpacity={1}
+          onPress={() => {
+            setMessageMenuVisible(false);
+            setSelectedMessageId(null);
+          }}
+        >
+          <View style={styles.messageMenuContainer}>
+            <TouchableOpacity
+              style={[styles.messageMenuItem, styles.deleteMenuItem]}
+              onPress={unsendMessage}
+            >
+              <Ionicons
+                name="trash-outline"
+                size={24}
+                color="#ff3b30"
+              />
+              <Text style={[styles.messageMenuText, styles.deleteMenuText]}>Unsend</Text>
+            </TouchableOpacity>
+
+            <View style={styles.menuDivider} />
+
+            <TouchableOpacity
+              style={styles.messageMenuItem}
+              onPress={() => {
+                setMessageMenuVisible(false);
+                setSelectedMessageId(null);
+              }}
+            >
+              <Text style={styles.messageMenuText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
       </Modal>
 
       <View style={styles.inputContainer}>
@@ -507,5 +633,41 @@ const styles = StyleSheet.create({
   fullScreenImage: {
     width: "100%",
     height: "80%",
+  },
+
+  messageMenuOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  messageMenuContainer: {
+    backgroundColor: "#fff",
+    borderRadius: 15,
+    width: "70%",
+    maxWidth: 250,
+    overflow: "hidden",
+  },
+  messageMenuItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 20,
+    justifyContent: "center",
+  },
+  deleteMenuItem: {
+    borderTopWidth: 0,
+  },
+  messageMenuText: {
+    fontSize: 18,
+    color: "#333",
+  },
+  deleteMenuText: {
+    color: "#ff3b30",
+    fontWeight: "600",
+    marginLeft: 12,
+  },
+  menuDivider: {
+    height: 1,
+    backgroundColor: "#f0f0f0",
   },
 });
