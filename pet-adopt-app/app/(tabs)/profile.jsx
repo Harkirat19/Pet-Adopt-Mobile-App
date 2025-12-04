@@ -64,12 +64,7 @@ export default function Profile() {
       icon: "chatbubble",
       path: "/(tabs)/inbox",
     },
-    {
-      id: 6,
-      name: "Edit Profile",
-      icon: "create-outline",
-      path: "edit",
-    },
+
     {
       id: 4,
       name: "Logout",
