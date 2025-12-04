@@ -7,18 +7,18 @@ export default function PetSort({ selectedSort, onChangeSort }) {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Sort by:</Text>
+
       <View style={styles.pickerWrapper}>
         <Picker
           selectedValue={selectedSort}
           onValueChange={(itemValue) => onChangeSort(itemValue)}
           style={styles.picker}
-          itemStyle={styles.pickerItem}
         >
           <Picker.Item label="Default" value="none" />
-          <Picker.Item label="Name (A → Z)" value="name-asc" />
-          <Picker.Item label="Name (Z → A)" value="name-desc" />
-          <Picker.Item label="Age (Low → High)" value="age-asc" />
-          <Picker.Item label="Age (High → Low)" value="age-desc" />
+          <Picker.Item label="Name (A->Z)" value="name-asc" />
+          <Picker.Item label="Name (Z->A)" value="name-desc" />
+          <Picker.Item label="Age (low->high)" value="age-asc" />
+          <Picker.Item label="Age (high->low)" value="age-desc" />
         </Picker>
       </View>
     </View>
@@ -34,30 +34,26 @@ const styles = StyleSheet.create({
   },
   label: {
     fontFamily: "outfit-medium",
-    fontSize: 16,
+    fontSize: 15,
     color: Colors.PRIMARY,
     marginRight: 10,
+    width: 50,
   },
   pickerWrapper: {
-    width: 200,
+    flex: 1,
     borderWidth: 1,
     borderColor: Colors.PRIMARY,
-    borderRadius: 10,
+    borderRadius: 12,
     backgroundColor: Colors.BG_CARD || "#fff",
-    height: 45,
+    height: 56,         
     justifyContent: "center",
-    overflow: "hidden", 
+    paddingLeft: 16,
+    paddingRight: 40,
+    paddingVertical: 4,   
   },
   picker: {
-    fontFamily: "outfit-medium",
-    fontSize: 14,
-    height: 45,
-    border: "none", 
-    outline: "none", 
-    boxShadow: "none", 
-  },
-  pickerItem: {
-    fontFamily: "outfit-medium",
-    fontSize: 14,
+    fontSize: 16,
+    lineHeight: 22,       
+    height: 56,
   },
 });
