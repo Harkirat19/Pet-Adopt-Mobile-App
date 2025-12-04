@@ -1,9 +1,31 @@
 import {View, Text, Image} from "react-native";
-import React from "react";
+import React, {useState, useEffect} from "react";
 import {useUser} from "@clerk/clerk-expo";
+import {doc, getDoc} from "firebase/firestore";
+import {db} from "../../config/FirebaseConfig";
 
 export default function Header() {
   const {isLoaded, user} = useUser();
+  const [firestoreUser, setFirestoreUser] = useState(null);
+
+  useEffect(() => {
+    const loadUserData = async () => {
+      if (user?.id) {
+        try {
+          const userDoc = await getDoc(doc(db, "users", user.id));
+          if (userDoc.exists()) {
+            setFirestoreUser(userDoc.data());
+          }
+        } catch (error) {
+          console.log("Error loading user data:", error);
+        }
+      }
+    };
+
+    if (isLoaded && user) {
+      loadUserData();
+    }
+  }, [isLoaded, user]);
 
   if (!isLoaded) {
     return (
@@ -21,19 +43,19 @@ export default function Header() {
     );
   }
 
+  // Use Firestore data if available, fallback to Clerk data
+  const displayName = firestoreUser?.userName || user.fullName || "User";
+  const profileImage = firestoreUser?.userImage || user.imageUrl;
+
   return (
-    // Using user.id as key forces the component to remount when user data updates.
-    <View
-      style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}
-      key={user.id}
-    >
+    <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
       <View>
         <Text style={{fontFamily: "outfit", fontSize: 18}}>Welcome,</Text>
-        <Text style={{fontFamily: "outfit-medium", fontSize: 25}}>{user.fullName || "User"}</Text>
+        <Text style={{fontFamily: "outfit-medium", fontSize: 25}}>{displayName}</Text>
       </View>
-      {user.imageUrl && (
+      {profileImage && (
         <Image
-          source={{uri: user.imageUrl}}
+          source={{uri: profileImage}}
           style={{width: 40, height: 40, borderRadius: 99}}
         />
       )}
