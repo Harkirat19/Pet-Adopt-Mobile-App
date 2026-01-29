@@ -1,74 +1,87 @@
-# Group_05
+# 🐾 The Pet Adopt App
 
-## Developers
-| Name        |   Role |     Github    | Email       |
-| ----------- | --------- | --------- | --------------------------- |
-| Pranjal Vijaykumar Parmar  | Front-end Dev | pparmar25 | pparmar25@myseneca.ca |
-| Kumudhini Reddicherla  | Front-end Dev | kumudhini1234 | kreddicherla@myseneca.ca |
-| Srushti Jitendrakumar Patel  | Front-end Dev | srushti674 | spatel674@myseneca.ca |
-| Harkirat Singh  | Full-Stack Dev | harkirat19 | harkirat-singh6@myseneca.ca |
+A **cross-platform mobile application** built to simplify the **pet adoption process** by connecting potential adopters with pet owners. The app enables users to **create profiles, browse and filter pet listings, chat with owners, and manage wishlists** — all in a secure and user-friendly environment.
 
+As the **Full‑Stack Developer and Team Lead**, I oversaw project architecture and managed backend integration, authentication, and database operations, collaborating with three frontend developers.
 
+---
 
-## Project Description
-Our project focuses on developing a Pet Adoption Mobile App to connect potential adopters with animals and streamline the adoption process. The app features detailed  User registration and Profile creation, Pet profiles, Advanced search filters and Option to Chat with pet owners. Users can add pets to wishlist, explore matches, and post pets for adoption if they wish to give them away.
+## 👨‍💻 Developers
 
+| Name | Role | GitHub | Email |
+|------|------|---------|--------|
+| Pranjal Vijaykumar Parmar | Front-End Dev | [pparmar25](https://github.com/pparmar25) | [pparmar25@myseneca.ca](mailto:pparmar25@myseneca.ca) |
+| Kumudhini Reddicherla | Front-End Dev | [kumudhini1234](https://github.com/kumudhini1234) | [kreddicherla@myseneca.ca](mailto:kreddicherla@myseneca.ca) |
+| Srushti Jitendrakumar Patel | Front-End Dev | [srushti674](https://github.com/srushti674) | [spatel674@myseneca.ca](mailto:spatel674@myseneca.ca) |
+| Harkirat Singh | Full-Stack Dev / Team Lead | [harkirat19](https://github.com/Harkirat19) | [harkirat-singh6@myseneca.ca](mailto:harkirat-singh6@myseneca.ca) |
 
-### User Registration and Profile Creation
-  - User-friendly registration process to create personal profiles featuring profile picture, name, e-mail, contact number.
-  - Option to update or delete user profiles.
+---
 
-### Pet Adoption Listings
-- Pet Adoption Listings include pet details such as pet profile, location and owner contact information.
-- Each pet profile represents an individual animal available for adoption.
-- Adoption listings group pet profiles created by the pet owners.
-- Ensures a seamless user experience for browsing and managing pets.
+## 🐶 Project Overview
 
-### Pet Profiles
-- Detailed profiles for each pet, including:
-  - Name, age, breed, gender, and health status (e.g., vaccinated, neutered/spayed).
-  - Photos to showcase the pet's appearance.
-  - Status indicators (e.g., Available or Adopted).
-  - Linked to adoption listings with owner details.
+The Pet Adopt App connects **potential adopters with pet owners** to encourage responsible adoption and simplify the entire process. Users can register, search, chat, and manage adoption listings directly in the app.
 
-### Advanced Pet Search and Filtering
-- Filters for species, breed, age, size, location, and health status.
-- Matching algorithm to suggest pets based on pet filters applied by user.
-- Results sorted by relevance, proximity, or recency of listing.
+---
 
-### Post a New Pet for Adoption
-- Easy form for creating adoption listings with fields for pet details, photos, and owner contact information.
-- Features to update or delete listings.
+## ✨ Key Features
 
-### Chat with Pet Owners
-- Real-time messaging to ensure quick and effective communication between adopters and pet owners.
-- Feature for users to share multimedia (e.g., photos or videos of pets) within the chat for better interaction.
-- Include message history storage, allowing users to access previous conversations.
-- Offer a quick-access feature to initiate chats directly from pet profiles or adoption listings.
+- **User Authentication & Profiles**: Secure registration and profile management using **Clerk**.
+- **Pet Listings & Profiles**: Display detailed information including breed, age, health, and owner contact.
+- **Advanced Filtering & Search**: Filter pets by species, breed, age, location, and adoption status.
+- **Real-time Chat**: Built-in chat system for seamless adopter-owner communication.
+- **Wishlist Management**: Save and organize favorite pets for easy access later.
+- **Post Management**: Create, update, and delete adoption listings from within the app.
 
-### User Wishlist
-- Enable users to save pets to their wishlist for future reference.
-- Allow users to sort saved pets by status, like "Available" or "Adopted".
+---
 
-
-## Tech Stack
+## 🧠 Tech Stack
 
 ### Frontend
-
-React Native: For building cross-platform mobile applications with a responsive and user-friendly interface.
-Expo: To simplify mobile app development and deployment processes.
+- **React Native**
+- **Expo**
 
 ### Backend
+- **Firebase Firestore**
 
-Firebase Firestore: A cloud-hosted NoSQL database for real-time data storage and management.
-Clerk Authentication: To securely manage user accounts and authentication.
+### Authentication
+- **Clerk**
 
-### Tools and Development Environment
+### Tools & Environment
+- **Visual Studio Code (VS Code)**
+- **Prettier**
+- **Git + GitHub**
 
-Visual Studio Code (VS Code): With extensions like Prettier for code formatting and debugging tools.
-Version Control: Managed collaboratively using Git and GitHub.
+---
 
-### Hosting
+## 📱 Screenshots from App
 
-The final hosting platform will be determined later, with potential candidates including Vercel or Firebase Hosting.
+- **Login Screen**
+<p> <img width="238" height="502" alt="image" src="https://github.com/user-attachments/assets/7da8e0c4-526e-4562-95d4-eef54bd8f303" width="250"/>
+<img width="231" height="502" alt="image" src="https://github.com/user-attachments/assets/a1f68118-48f1-43ee-b654-c931bb4b6fcc" width="250" />
+<img width="228" height="497" alt="image" src="https://github.com/user-attachments/assets/f32f4c7c-4351-4d7c-8c86-d164531cc567" width="250"/> </p>
+
+
+
+- **Marking pet as Favourite Demo**
+  [Watch the prototype](https://github.com/CAPSTONE-2025/Group_05/releases/download/v0.1-sprint4-demo/Prototype_Demo_Sprint4.mp4)
+
+
+  
+- **Add New Pet Listing**
+  <p> <img src="https://github.com/user-attachments/assets/19369558-8a78-4b0f-bb6f-d0bfc31f77b8" width="250">
+  <img src="https://github.com/user-attachments/assets/c60b9490-5bff-47d8-8b61-9a9172d5ae88" width="250"> </p>
+
+
+
+
+- **Edit Pet Info** <p> <img src="https://github.com/user-attachments/assets/fd00be30-b07a-4f0c-921f-8fff747dedbc" width="250"> 
+  <img src="https://github.com/user-attachments/assets/a42bd593-0cfd-4921-a521-34e8ff54a79a" width="250"> 
+  <img src="https://github.com/user-attachments/assets/b848c251-4fb1-4173-891c-91a717cff885" width="250"> </p>
+
+
+
+
+- **Real-time Chat**
+  <p> <img src="https://github.com/user-attachments/assets/f16aa3d2-f39b-4e81-9e71-652c8cb21be6" width="250"></p>
+
 
