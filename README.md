@@ -53,6 +53,24 @@ The Pet Adopt App connects **potential adopters with pet owners** to encourage r
 
 ---
 
+## ⚙️ Installation & Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/CAPSTONE-2025/Group_05.git](https://github.com/Harkirat19/Pet-Adopt-Mobile-App.git
+
+# Navigate into the project directory
+cd pet-adopt-app
+
+# Install dependencies
+npx expo install
+
+# Start the project
+npx expo start
+```
+
+---
+
 ## 📱 Screenshots from App
 
 - **Login Screen**
